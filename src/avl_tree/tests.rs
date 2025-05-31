@@ -121,3 +121,9 @@ fn equal_recursive<T: PartialEq>(t1: &Tree<T>, t2: &bt::Tree<T>) -> bool {
         _ => false,
     }
 }
+
+impl<T: core::fmt::Debug> core::fmt::Debug for AVLTree<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        write!(f, "{:?}", self.root())
+    }
+}

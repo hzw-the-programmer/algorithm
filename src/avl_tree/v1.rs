@@ -156,12 +156,6 @@ impl<T: PartialOrd + Clone> AVLTree<T> {
     }
 }
 
-impl<T: core::fmt::Debug> core::fmt::Debug for AVLTree<T> {
-    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-        write!(f, "{:?}", self.root)
-    }
-}
-
 impl<T> AVLTree<T> {
     pub fn new() -> Self {
         Self { root: None }
