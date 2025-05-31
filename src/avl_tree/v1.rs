@@ -3,9 +3,9 @@ use std::cmp::PartialOrd;
 use std::rc::Rc;
 
 type RcNode<T> = Rc<RefCell<Node<T>>>;
-type Tree<T> = Option<RcNode<T>>;
+pub type Tree<T> = Option<RcNode<T>>;
 
-struct Node<T> {
+pub struct Node<T> {
     value: T,
     left: Tree<T>,
     right: Tree<T>,
@@ -86,6 +86,18 @@ impl<T> Node<T> {
 
         y
     }
+
+    pub fn value(&self) -> &T {
+        &self.value
+    }
+
+    pub fn left(&self) -> &Tree<T> {
+        &self.left
+    }
+
+    pub fn right(&self) -> &Tree<T> {
+        &self.right
+    }
 }
 
 pub struct AVLTree<T> {
@@ -144,5 +156,9 @@ impl<T: PartialOrd + Clone> AVLTree<T> {
                 }
             }
         }
+    }
+
+    pub fn root(&self) -> &Tree<T> {
+        &self.root
     }
 }
