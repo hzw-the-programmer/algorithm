@@ -1,7 +1,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-type Tree<T> = Option<Rc<RefCell<Node<T>>>>;
+pub type Tree<T> = Option<Rc<RefCell<Node<T>>>>;
 
 #[derive(PartialEq, Debug)]
 pub struct Node<T> {

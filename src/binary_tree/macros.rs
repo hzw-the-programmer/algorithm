@@ -2,8 +2,7 @@
 macro_rules! option_array {
     // 入口点：匹配数组字面量
     ($($input:tt)*) => {
-        // $crate::binary_tree::option_array_inner!([] $($input)*)
-        option_array_inner!([] $($input)*)
+        $crate::binary_tree::option_array_inner!([] $($input)*)
     };
 }
 pub use option_array;
@@ -32,7 +31,7 @@ macro_rules! option_array_inner {
 
     // 处理最后一个普通表达式元素
     ([$($output:expr,)*] $element:expr) => {
-        option_array_inner!([$($output,)* Some($element),])
+        $crate::binary_tree::option_array_inner!([$($output,)* Some($element),])
     };
 }
 pub use option_array_inner;
@@ -40,8 +39,7 @@ pub use option_array_inner;
 #[macro_export]
 macro_rules! btree {
     ($($input:tt)*) => {
-        // $crate::binary_tree::new_tree(&$crate::binary_tree::option_array!($($input)*))
-        new_tree_from(&option_array!($($input)*))
+        $crate::binary_tree::new_tree_from(&$crate::binary_tree::option_array!($($input)*))
     };
 }
 pub use btree;
