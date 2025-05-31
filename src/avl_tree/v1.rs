@@ -101,16 +101,11 @@ impl<T> Node<T> {
     }
 }
 
-#[derive(Debug)]
 pub struct AVLTree<T> {
     root: Tree<T>,
 }
 
 impl<T: PartialOrd + Clone> AVLTree<T> {
-    pub fn new() -> Self {
-        Self { root: None }
-    }
-
     pub fn insert(&mut self, value: T) {
         self.root = Self::insert_recursive(self.root.take(), &value);
     }
@@ -161,7 +156,17 @@ impl<T: PartialOrd + Clone> AVLTree<T> {
     }
 }
 
+impl<T: core::fmt::Debug> core::fmt::Debug for AVLTree<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        write!(f, "{:?}", self.root)
+    }
+}
+
 impl<T> AVLTree<T> {
+    pub fn new() -> Self {
+        Self { root: None }
+    }
+
     pub fn root(&self) -> &Tree<T> {
         &self.root
     }
