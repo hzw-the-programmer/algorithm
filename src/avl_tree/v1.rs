@@ -88,16 +88,16 @@ impl<T> Node<T> {
     }
 }
 
-struct AVLTree<T> {
+pub struct AVLTree<T> {
     root: Tree<T>,
 }
 
 impl<T: PartialOrd + Clone> AVLTree<T> {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self { root: None }
     }
 
-    fn insert(&mut self, value: T) {
+    pub fn insert(&mut self, value: T) {
         self.root = Self::insert_recursive(self.root.take(), &value);
     }
 
@@ -106,11 +106,11 @@ impl<T: PartialOrd + Clone> AVLTree<T> {
             None => Some(Rc::new(RefCell::new(Node::new(value.clone())))),
             Some(node) => {
                 if *value < node.borrow().value {
-                    node.borrow_mut().left =
-                        Self::insert_recursive(node.borrow_mut().left.take(), value);
+                    let left = node.borrow_mut().left.take();
+                    node.borrow_mut().left = Self::insert_recursive(left, value);
                 } else if *value > node.borrow().value {
-                    node.borrow_mut().right =
-                        Self::insert_recursive(node.borrow_mut().right.take(), value);
+                    let right = node.borrow_mut().right.take();
+                    node.borrow_mut().right = Self::insert_recursive(right, value);
                 } else {
                     return Some(node);
                 }
