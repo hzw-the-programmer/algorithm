@@ -5,6 +5,7 @@ use std::rc::Rc;
 type RcNode<T> = Rc<RefCell<Node<T>>>;
 pub type Tree<T> = Option<RcNode<T>>;
 
+#[derive(Debug)]
 pub struct Node<T> {
     value: T,
     left: Tree<T>,
@@ -100,6 +101,7 @@ impl<T> Node<T> {
     }
 }
 
+#[derive(Debug)]
 pub struct AVLTree<T> {
     root: Tree<T>,
 }
@@ -157,7 +159,9 @@ impl<T: PartialOrd + Clone> AVLTree<T> {
             }
         }
     }
+}
 
+impl<T> AVLTree<T> {
     pub fn root(&self) -> &Tree<T> {
         &self.root
     }
