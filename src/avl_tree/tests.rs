@@ -101,6 +101,25 @@ fn test_rr_insert() {
     );
 }
 
+#[test]
+fn test_lr_insert() {
+    let mut t = AVLTree::new();
+
+    t.insert(9);
+    t.insert(6);
+    assert_eq!(t, bt::btree![9, 6]);
+
+    t.insert(7);
+    assert_ne!(t, bt::btree![9, 6, null, null, 7]);
+    assert_eq!(t, bt::btree![7, 6, 9]);
+
+    t.insert(4);
+    assert_eq!(t, bt::btree![7, 6, 9, 4]);
+
+    t.insert(5);
+    assert_eq!(t, bt::btree![7, 5, 9, 4, 6]);
+}
+
 impl<T: PartialEq> PartialEq<bt::Tree<T>> for AVLTree<T> {
     fn eq(&self, other: &bt::Tree<T>) -> bool {
         equal_recursive(self.root(), other)
