@@ -3,6 +3,7 @@ use crate::binary_tree as bt;
 
 mod delete;
 mod insert;
+mod iter;
 mod search;
 
 impl<T: PartialEq> PartialEq<bt::Tree<T>> for AVLTree<T> {
