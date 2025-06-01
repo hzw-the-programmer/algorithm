@@ -6,9 +6,9 @@ pub type Tree<T> = Option<RcNode<T>>;
 
 #[derive(Debug)]
 pub struct Node<T> {
-    pub(super) value: T,
-    pub(super) left: Tree<T>,
-    pub(super) right: Tree<T>,
+    pub(crate) value: T,
+    pub(crate) left: Tree<T>,
+    pub(crate) right: Tree<T>,
     height: i32,
 }
 
@@ -90,30 +90,14 @@ impl<T> Node<T> {
 
         y
     }
-
-    pub fn value(&self) -> &T {
-        &self.value
-    }
-
-    pub fn left(&self) -> &Tree<T> {
-        &self.left
-    }
-
-    pub fn right(&self) -> &Tree<T> {
-        &self.right
-    }
 }
 
 pub struct AVLTree<T> {
-    pub(super) root: Tree<T>,
+    pub(crate) root: Tree<T>,
 }
 
 impl<T> AVLTree<T> {
     pub fn new() -> Self {
         Self { root: None }
-    }
-
-    pub fn root(&self) -> &Tree<T> {
-        &self.root
     }
 }

@@ -5,23 +5,9 @@ pub type Tree<T> = Option<Rc<RefCell<Node<T>>>>;
 
 #[derive(PartialEq, Debug)]
 pub struct Node<T> {
-    value: T,
-    left: Tree<T>,
-    right: Tree<T>,
-}
-
-impl<T> Node<T> {
-    pub fn value(&self) -> &T {
-        &self.value
-    }
-
-    pub fn left(&self) -> &Tree<T> {
-        &self.left
-    }
-
-    pub fn right(&self) -> &Tree<T> {
-        &self.right
-    }
+    pub(crate) value: T,
+    pub(crate) left: Tree<T>,
+    pub(crate) right: Tree<T>,
 }
 
 pub fn new_tree<T>(value: T, left: Tree<T>, right: Tree<T>) -> Tree<T> {
