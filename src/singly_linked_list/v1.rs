@@ -48,4 +48,22 @@ impl<T> SinglyLinkedList<T> {
         }
         slow
     }
+
+    pub fn nth_from_end(&self, n: usize) -> LinkRef<T> {
+        let mut fast = self.head.as_ref();
+        for _ in 0..n {
+            if fast.is_some() {
+                fast = fast.unwrap().next.as_ref();
+            } else {
+                return None;
+            }
+        }
+
+        let mut slow = self.head.as_ref();
+        while fast.is_some() {
+            fast = fast.unwrap().next.as_ref();
+            slow = slow.unwrap().next.as_ref();
+        }
+        slow
+    }
 }

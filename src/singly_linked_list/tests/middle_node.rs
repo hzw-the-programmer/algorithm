@@ -1,20 +1,20 @@
 use super::*;
 
 #[test]
-fn test_middle_node_0() {
+fn test_0() {
     let l = SinglyLinkedList::<i32>::new();
     assert!(l.middle_node().is_none());
 }
 
 #[test]
-fn test_middle_node_1() {
+fn test_1() {
     let mut l = SinglyLinkedList::new();
     l.push_back(1);
     assert_eq!(l.middle_node().unwrap().value, 1);
 }
 
 #[test]
-fn test_middle_node_2() {
+fn test_2() {
     let mut l = SinglyLinkedList::new();
     l.push_back(1);
     l.push_back(2);
@@ -22,7 +22,7 @@ fn test_middle_node_2() {
 }
 
 #[test]
-fn test_middle_node_3() {
+fn test_3() {
     let mut l = SinglyLinkedList::new();
     l.push_back(1);
     l.push_back(2);
@@ -31,7 +31,7 @@ fn test_middle_node_3() {
 }
 
 #[test]
-fn test_middle_node_4() {
+fn test_4() {
     let mut l = SinglyLinkedList::new();
     l.push_back(1);
     l.push_back(2);
@@ -41,7 +41,7 @@ fn test_middle_node_4() {
 }
 
 #[test]
-fn test_middle_node_5() {
+fn test_5() {
     let mut l = SinglyLinkedList::new();
     l.push_back(1);
     l.push_back(2);
