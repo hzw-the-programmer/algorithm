@@ -21,6 +21,7 @@ pub mod monotonic_stack;
 pub mod power;
 pub mod quicksort;
 pub mod segment_tree;
+pub mod singly_linked_list;
 pub mod subset_sum;
 pub mod trie;
 pub mod word_break;
