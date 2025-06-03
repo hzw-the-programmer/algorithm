@@ -6,7 +6,7 @@ pub type LinkRef<'a, T> = Option<&'a BoxNode<T>>;
 
 pub struct Node<T> {
     pub(crate) value: T,
-    pub(super) next: Link<T>,
+    pub(crate) next: Link<T>,
 }
 
 impl<T> Node<T> {
@@ -14,17 +14,17 @@ impl<T> Node<T> {
         Self { value, next }
     }
 
-    fn new_box(value: T, next: Link<T>) -> BoxNode<T> {
+    pub fn new_box(value: T, next: Link<T>) -> BoxNode<T> {
         Box::new(Node::new(value, next))
     }
 
-    // fn new_link(value: T, next: Link<T>) -> Link<T> {
-    //     Some(Box::new(Node { value, next }))
-    // }
+    pub fn new_link(value: T, next: Link<T>) -> Link<T> {
+        Some(Box::new(Node { value, next }))
+    }
 }
 
 pub struct SinglyLinkedList<T> {
-    pub(super) head: Link<T>,
+    pub(crate) head: Link<T>,
     pub(super) tail: *mut Node<T>,
     pub(super) len: usize,
 }
