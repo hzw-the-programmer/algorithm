@@ -9,11 +9,11 @@ fn test_1() {
     let n3 = Node::new_link(3, Some(n4));
 
     let mut n2 = Node::new_box(2, n3);
-    println!("n2.1 {:p}", n2);
+    // println!("n2.1 {:p}", n2);
     let n2_raw = Box::into_raw(n2);
-    println!("n2.2 {:p}", n2_raw);
+    // println!("n2.2 {:p}", n2_raw);
     n2 = unsafe { Box::from_raw(n2_raw) };
-    println!("n2.3 {:p}", n2);
+    // println!("n2.3 {:p}", n2);
     // let a = Some(n2);
     // println!("n2.4 {:p}", a.unwrap());
     // println!("n2.5 {:p}", a.as_ref().unwrap());
@@ -31,7 +31,7 @@ fn test_1() {
 
     unsafe {
         (*n4_raw).next = Some(Box::from_raw(n2_raw));
-        println!("n4.1 = {:p}", *(*n4_raw).next.as_ref().unwrap());
+        // println!("n4.1 = {:p}", *(*n4_raw).next.as_ref().unwrap());
     }
 
     assert_eq!(l.cycle_entry().unwrap().value, 2);
@@ -42,7 +42,7 @@ fn test_1() {
     }
 }
 
-// #[test]
+#[test]
 fn test_2() {
     let mut l = SinglyLinkedList::new();
     l.push_back(0);
@@ -51,4 +51,31 @@ fn test_2() {
     l.push_back(3);
     l.push_back(4);
     assert!(l.cycle_entry().is_none());
+}
+
+#[test]
+fn test_3() {
+    let n4 = Node::new_box(4, None);
+    let n4_raw = Box::into_raw(n4);
+    let n4 = unsafe { Box::from_raw(n4_raw) };
+
+    let mut n3 = Node::new_box(3, Some(n4));
+    let n3_raw = Box::into_raw(n3);
+    n3 = unsafe { Box::from_raw(n3_raw) };
+
+    let n2 = Node::new_link(2, Some(n3));
+    let n1 = Node::new_link(1, n2);
+
+    let mut l = SinglyLinkedList::new();
+    l.head = n1;
+
+    unsafe {
+        (*n4_raw).next = Some(Box::from_raw(n3_raw));
+    }
+
+    assert_eq!(l.cycle_entry().unwrap().value, 3);
+
+    unsafe {
+        let _ = std::mem::ManuallyDrop::new((*n4_raw).next.take());
+    }
 }

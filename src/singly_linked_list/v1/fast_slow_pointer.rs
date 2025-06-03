@@ -1,7 +1,7 @@
 use super::*;
 use std::ptr;
 
-impl<T: std::fmt::Debug> SinglyLinkedList<T> {
+impl<T> SinglyLinkedList<T> {
     pub fn middle(&self) -> LinkRef<T> {
         let mut slow = self.head.as_ref();
         let mut fast = self.head.as_ref();
@@ -92,21 +92,28 @@ impl<T: std::fmt::Debug> SinglyLinkedList<T> {
         false
     }
 
-    pub fn cycle_entry(&self) -> Option<&Node<T>> {
+    pub fn cycle_entry(&self) -> Option<&Node<T>>
+    // where
+    //     T: std::fmt::Debug,
+    {
         let mut fast = self.head.as_deref();
         let mut slow = self.head.as_deref();
         while fast.is_some() {
             fast = fast.unwrap().next.as_deref();
-            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+            // if fast.is_some() {
+            //     println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+            // }
             if fast.is_some() {
                 fast = fast.unwrap().next.as_deref();
-                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                // if fast.is_some() {
+                //     println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                // }
                 slow = slow.unwrap().next.as_deref();
-                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
+                // println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
                 if fast.is_some()
                     && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
                 {
-                    println!("found");
+                    // println!("found");
                     break;
                 }
             }
