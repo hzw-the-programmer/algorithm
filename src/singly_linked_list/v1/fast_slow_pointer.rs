@@ -84,9 +84,7 @@ impl<T> SinglyLinkedList<T> {
                 // }
                 slow = slow.unwrap().next.as_deref();
                 // println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
-                if fast.is_some()
-                    && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
-                {
+                if fast.is_some() && ptr::eq(fast.unwrap(), slow.unwrap()) {
                     // println!("found");
                     return true;
                 }
@@ -113,9 +111,7 @@ impl<T> SinglyLinkedList<T> {
                 // }
                 slow = slow.unwrap().next.as_deref();
                 // println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
-                if fast.is_some()
-                    && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
-                {
+                if fast.is_some() && ptr::eq(fast.unwrap(), slow.unwrap()) {
                     // println!("found");
                     break;
                 }
@@ -127,7 +123,7 @@ impl<T> SinglyLinkedList<T> {
         }
 
         fast = self.head.as_deref();
-        while fast.unwrap() as *const Node<T> != slow.unwrap() as *const Node<T> {
+        while !ptr::eq(fast.unwrap(), slow.unwrap()) {
             fast = fast.unwrap().next.as_deref();
             slow = slow.unwrap().next.as_deref();
         }
