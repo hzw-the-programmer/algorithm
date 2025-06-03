@@ -75,8 +75,7 @@ impl<T> SinglyLinkedList<T> {
                 fast = fast.unwrap().next.as_ref();
                 slow = slow.unwrap().next.as_ref();
                 if fast.is_some()
-                    && (fast.unwrap() as *const Box<Node<T>>)
-                        == (slow.unwrap() as *const Box<Node<T>>)
+                    && fast.unwrap() as *const Box<Node<T>> == slow.unwrap() as *const Box<Node<T>>
                 {
                     return true;
                 }
