@@ -1,48 +1,6 @@
-type BoxNode<T> = Box<Node<T>>;
-type Link<T> = Option<BoxNode<T>>;
-type LinkRef<'a, T> = Option<&'a BoxNode<T>>;
+use super::*;
 
-pub struct Node<T> {
-    pub(crate) value: T,
-    next: Link<T>,
-}
-
-impl<T> Node<T> {
-    // fn new(value: T) -> Self {
-    //     Self { value, next: None }
-    // }
-
-    fn new_link(value: T, next: Link<T>) -> Link<T> {
-        Some(Box::new(Node { value, next }))
-    }
-}
-
-pub struct SinglyLinkedList<T> {
-    head: Link<T>,
-}
-
-impl<T: std::fmt::Debug> SinglyLinkedList<T> {
-    pub fn new() -> Self {
-        Self { head: None }
-    }
-
-    pub fn push_back(&mut self, value: T) {
-        match &mut self.head {
-            None => self.head = Node::new_link(value, None),
-            Some(node) => {
-                let mut current = node;
-                while current.next.is_some() {
-                    current = current.next.as_mut().unwrap();
-                }
-                current.next = Node::new_link(value, None);
-            }
-        }
-    }
-
-    pub fn push_front(&mut self, value: T) {
-        self.head = Node::new_link(value, self.head.take());
-    }
-
+impl<T> SinglyLinkedList<T> {
     pub fn middle_node(&self) -> LinkRef<T> {
         let mut slow = self.head.as_ref();
         let mut fast = self.head.as_ref();
