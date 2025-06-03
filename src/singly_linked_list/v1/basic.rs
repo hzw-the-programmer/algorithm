@@ -1,4 +1,4 @@
-use std::ptr::NonNull;
+use std::ptr;
 
 type BoxNode<T> = Box<Node<T>>;
 pub type Link<T> = Option<BoxNode<T>>;
@@ -25,7 +25,7 @@ impl<T> Node<T> {
 
 pub struct SinglyLinkedList<T> {
     pub(crate) head: Link<T>,
-    tail: Option<NonNull<Node<T>>>,
+    tail: *mut Node<T>,
     len: usize,
 }
 
@@ -33,15 +33,15 @@ impl<T> SinglyLinkedList<T> {
     pub fn new() -> Self {
         Self {
             head: None,
-            tail: None,
+            tail: ptr::null_mut(),
             len: 0,
         }
     }
 
     pub fn push_front(&mut self, value: T) {
         let mut node = Node::new_box(value, self.head.take());
-        if self.tail.is_none() {
-            self.tail = unsafe { Some(NonNull::new_unchecked(&mut *node as *mut Node<T>)) };
+        if self.tail.is_null() {
+            self.tail = &mut *node as *mut Node<T>;
         }
         self.head = Some(node);
         self.len += 1;
@@ -50,11 +50,12 @@ impl<T> SinglyLinkedList<T> {
     pub fn push_back(&mut self, value: T) {
         let mut node = Node::new_box(value, None);
         let ptr = &mut *node as *mut Node<T>;
-        match self.tail {
-            None => self.head = Some(node),
-            Some(mut ptr) => unsafe { ptr.as_mut().next = Some(node) },
+        if self.tail.is_null() {
+            self.head = Some(node);
+        } else {
+            unsafe { (*self.tail).next = Some(node) };
         }
-        self.tail = unsafe { Some(NonNull::new_unchecked(ptr)) };
+        self.tail = ptr;
         self.len += 1;
     }
 
@@ -62,11 +63,17 @@ impl<T> SinglyLinkedList<T> {
         self.head.take().map(|mut node| {
             self.head = node.next.take();
             if self.head.is_none() {
-                self.tail = None;
+                self.tail = ptr::null_mut();
             }
             self.len -= 1;
             node.value
         })
+    }
+
+    pub fn clear(&mut self) {
+        self.head = None;
+        self.tail = ptr::null_mut();
+        self.len = 0;
     }
 
     pub fn len(&self) -> usize {
@@ -74,6 +81,6 @@ impl<T> SinglyLinkedList<T> {
     }
 
     pub fn is_empty(&self) -> bool {
-        self.len() == 0
+        self.len == 0
     }
 }
