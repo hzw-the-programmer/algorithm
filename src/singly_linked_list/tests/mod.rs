@@ -1,6 +1,7 @@
 use super::*;
 
 mod basic;
+mod into_iter;
 mod iter;
 mod iter_mut;
 mod middle;
