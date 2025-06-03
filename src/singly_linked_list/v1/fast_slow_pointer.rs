@@ -1,7 +1,7 @@
 use super::*;
 
 impl<T> SinglyLinkedList<T> {
-    pub fn middle_node(&self) -> LinkRef<T> {
+    pub fn middle(&self) -> LinkRef<T> {
         let mut slow = self.head.as_ref();
         let mut fast = self.head.as_ref();
         while fast.is_some() && fast.unwrap().next.is_some() {
