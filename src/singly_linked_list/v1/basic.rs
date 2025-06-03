@@ -1,6 +1,6 @@
 use std::ptr;
 
-type BoxNode<T> = Box<Node<T>>;
+pub type BoxNode<T> = Box<Node<T>>;
 pub type Link<T> = Option<BoxNode<T>>;
 pub type LinkRef<'a, T> = Option<&'a BoxNode<T>>;
 

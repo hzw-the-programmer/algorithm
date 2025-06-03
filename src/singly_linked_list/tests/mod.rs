@@ -1,6 +1,7 @@
 use super::*;
 
 mod basic;
+mod cycle_entry;
 mod has_cycle;
 mod into_iter;
 mod iter;

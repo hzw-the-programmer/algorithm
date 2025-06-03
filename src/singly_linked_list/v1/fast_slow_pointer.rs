@@ -1,7 +1,7 @@
 use super::*;
 use std::ptr;
 
-impl<T> SinglyLinkedList<T> {
+impl<T: std::fmt::Debug> SinglyLinkedList<T> {
     pub fn middle(&self) -> LinkRef<T> {
         let mut slow = self.head.as_ref();
         let mut fast = self.head.as_ref();
@@ -82,5 +82,37 @@ impl<T> SinglyLinkedList<T> {
             }
         }
         false
+    }
+
+    pub fn cycle_entry(&self) -> Option<&Node<T>> {
+        let mut fast = self.head.as_deref();
+        let mut slow = self.head.as_deref();
+        while fast.is_some() {
+            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+            fast = fast.unwrap().next.as_deref();
+            if fast.is_some() {
+                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                fast = fast.unwrap().next.as_deref();
+                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
+                slow = slow.unwrap().next.as_deref();
+                if fast.is_some()
+                    && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
+                {
+                    break;
+                }
+            }
+        }
+
+        if fast.is_none() {
+            return None;
+        }
+
+        fast = self.head.as_deref();
+        while fast.unwrap() as *const Node<T> != slow.unwrap() as *const Node<T> {
+            fast = fast.unwrap().next.as_deref();
+            slow = slow.unwrap().next.as_deref();
+        }
+        // None
+        Some(slow.unwrap())
     }
 }
