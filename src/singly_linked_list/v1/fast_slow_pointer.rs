@@ -71,16 +71,20 @@ impl<T: std::fmt::Debug> SinglyLinkedList<T> {
         let mut slow = self.head.as_deref();
         while fast.is_some() {
             fast = fast.unwrap().next.as_deref();
-            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+            // if fast.is_some() {
+            //     println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+            // }
             if fast.is_some() {
                 fast = fast.unwrap().next.as_deref();
-                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                // if fast.is_some() {
+                //     println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                // }
                 slow = slow.unwrap().next.as_deref();
-                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
+                // println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
                 if fast.is_some()
                     && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
                 {
-                    println!("found");
+                    // println!("found");
                     return true;
                 }
             }
@@ -117,7 +121,6 @@ impl<T: std::fmt::Debug> SinglyLinkedList<T> {
             fast = fast.unwrap().next.as_deref();
             slow = slow.unwrap().next.as_deref();
         }
-        // None
         Some(slow.unwrap())
     }
 }
