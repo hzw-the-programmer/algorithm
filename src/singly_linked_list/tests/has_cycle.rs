@@ -39,3 +39,30 @@ fn test_2() {
     l.push_back(4);
     assert!(!l.has_cycle());
 }
+
+#[test]
+fn test_3() {
+    let n4 = Node::new_box(4, None);
+    let n4_raw = Box::into_raw(n4);
+    let n4 = unsafe { Box::from_raw(n4_raw) };
+
+    let mut n3 = Node::new_box(3, Some(n4));
+    let n3_raw = Box::into_raw(n3);
+    n3 = unsafe { Box::from_raw(n3_raw) };
+
+    let n2 = Node::new_link(2, Some(n3));
+    let n1 = Node::new_link(1, n2);
+
+    let mut l = SinglyLinkedList::new();
+    l.head = n1;
+
+    unsafe {
+        (*n4_raw).next = Some(Box::from_raw(n3_raw));
+    }
+
+    assert!(l.has_cycle());
+
+    unsafe {
+        let _ = std::mem::ManuallyDrop::new((*n4_raw).next.take());
+    }
+}

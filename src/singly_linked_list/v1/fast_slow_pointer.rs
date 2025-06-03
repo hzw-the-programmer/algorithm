@@ -67,16 +67,20 @@ impl<T: std::fmt::Debug> SinglyLinkedList<T> {
     }
 
     pub fn has_cycle(&self) -> bool {
-        let mut fast = self.head.as_ref();
-        let mut slow = self.head.as_ref();
+        let mut fast = self.head.as_deref();
+        let mut slow = self.head.as_deref();
         while fast.is_some() {
-            fast = fast.unwrap().next.as_ref();
+            fast = fast.unwrap().next.as_deref();
+            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
             if fast.is_some() {
-                fast = fast.unwrap().next.as_ref();
-                slow = slow.unwrap().next.as_ref();
+                fast = fast.unwrap().next.as_deref();
+                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
+                slow = slow.unwrap().next.as_deref();
+                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
                 if fast.is_some()
-                    && fast.unwrap() as *const Box<Node<T>> == slow.unwrap() as *const Box<Node<T>>
+                    && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
                 {
+                    println!("found");
                     return true;
                 }
             }
@@ -88,16 +92,17 @@ impl<T: std::fmt::Debug> SinglyLinkedList<T> {
         let mut fast = self.head.as_deref();
         let mut slow = self.head.as_deref();
         while fast.is_some() {
-            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
             fast = fast.unwrap().next.as_deref();
+            println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
             if fast.is_some() {
-                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
                 fast = fast.unwrap().next.as_deref();
-                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
+                println!("fast: {:?}, {:p}", fast.unwrap().value, fast.unwrap());
                 slow = slow.unwrap().next.as_deref();
+                println!("slow: {:?}, {:p}", slow.unwrap().value, slow.unwrap());
                 if fast.is_some()
                     && fast.unwrap() as *const Node<T> == slow.unwrap() as *const Node<T>
                 {
+                    println!("found");
                     break;
                 }
             }
