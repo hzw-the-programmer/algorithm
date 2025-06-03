@@ -66,7 +66,10 @@ impl<T> SinglyLinkedList<T> {
         Some(removed.value)
     }
 
-    pub fn has_cycle(&self) -> bool {
+    pub fn has_cycle(&self) -> bool
+// where
+    //     T: std::fmt::Debug,
+    {
         let mut fast = self.head.as_deref();
         let mut slow = self.head.as_deref();
         while fast.is_some() {
@@ -93,7 +96,7 @@ impl<T> SinglyLinkedList<T> {
     }
 
     pub fn cycle_entry(&self) -> Option<&Node<T>>
-    // where
+// where
     //     T: std::fmt::Debug,
     {
         let mut fast = self.head.as_deref();
