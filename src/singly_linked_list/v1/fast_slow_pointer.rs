@@ -55,10 +55,13 @@ impl<T> SinglyLinkedList<T> {
 
         let removed = slow.next.take().unwrap();
         slow.next = removed.next;
+
         self.head = dummy.next;
         if self.head.is_none() {
             self.tail = ptr::null_mut();
         }
+        self.len -= 1;
+
         let _ = std::mem::ManuallyDrop::new(dummy.value);
         Some(removed.value)
     }

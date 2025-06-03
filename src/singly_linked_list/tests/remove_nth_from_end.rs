@@ -17,6 +17,7 @@ fn test() {
     assert!(l.remove_nth_from_end(1).is_none());
 
     l.push_back(1);
+    assert_eq!(l.len(), 1);
     assert_eq!(l.pop_front().unwrap(), 1);
 }
 

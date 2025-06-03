@@ -26,7 +26,7 @@ impl<T> Node<T> {
 pub struct SinglyLinkedList<T> {
     pub(super) head: Link<T>,
     pub(super) tail: *mut Node<T>,
-    len: usize,
+    pub(super) len: usize,
 }
 
 impl<T> SinglyLinkedList<T> {
