@@ -2,12 +2,15 @@ use super::*;
 use std::ptr;
 
 impl<T> SinglyLinkedList<T> {
-    pub fn middle(&self) -> LinkRef<T> {
-        let mut slow = self.head.as_ref();
-        let mut fast = self.head.as_ref();
-        while fast.is_some() && fast.unwrap().next.is_some() {
-            fast = fast.unwrap().next.as_ref().unwrap().next.as_ref();
-            slow = slow.unwrap().next.as_ref();
+    pub fn middle(&self) -> Option<&Node<T>> {
+        let mut fast = self.head.as_deref();
+        let mut slow = self.head.as_deref();
+        while fast.is_some() {
+            fast = fast.unwrap().next.as_deref();
+            if fast.is_some() {
+                fast = fast.unwrap().next.as_deref();
+                slow = slow.unwrap().next.as_deref();
+            }
         }
         slow
     }
