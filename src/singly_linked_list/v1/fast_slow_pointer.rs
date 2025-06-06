@@ -12,20 +12,20 @@ impl<T> SinglyLinkedList<T> {
         slow
     }
 
-    pub fn nth_from_end(&self, n: usize) -> LinkRef<T> {
-        let mut fast = self.head.as_ref();
+    pub fn nth_from_end(&self, n: usize) -> Option<&Node<T>> {
+        let mut fast = self.head.as_deref();
         for _ in 0..n {
             if fast.is_some() {
-                fast = fast.unwrap().next.as_ref();
+                fast = fast.unwrap().next.as_deref();
             } else {
                 return None;
             }
         }
 
-        let mut slow = self.head.as_ref();
+        let mut slow = self.head.as_deref();
         while fast.is_some() {
-            fast = fast.unwrap().next.as_ref();
-            slow = slow.unwrap().next.as_ref();
+            fast = fast.unwrap().next.as_deref();
+            slow = slow.unwrap().next.as_deref();
         }
         slow
     }
