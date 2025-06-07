@@ -74,16 +74,17 @@ impl<T> DoublyLinkedList<T> {
             return None;
         }
 
+        self.tail = unsafe { (*self.tail).pre };
+        // let mut node = if self.tail.is_null() {
+        let node = if self.tail.is_null() {
+            self.head.take().unwrap()
+        } else {
+            unsafe { (*self.tail).next.take().unwrap() }
+        };
+        // node.pre = ptr::null_mut();
         self.len -= 1;
 
-        let pre = unsafe { (*self.tail).pre };
-        if pre.is_null() {
-            self.tail = ptr::null_mut();
-            Some(self.head.take().unwrap().value)
-        } else {
-            self.tail = pre;
-            unsafe { Some((*self.tail).next.take().unwrap().value) }
-        }
+        Some(node.value)
     }
 
     pub fn is_empty(&self) -> bool {
