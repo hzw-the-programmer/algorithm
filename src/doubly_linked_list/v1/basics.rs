@@ -60,11 +60,21 @@ impl<T> DoublyLinkedList<T> {
         Some(node.value)
     }
 
+    pub fn clear(&mut self) {
+        while let Some(_) = self.pop_front() {}
+    }
+
     pub fn is_empty(&self) -> bool {
         self.len == 0
     }
 
     pub fn len(&self) -> usize {
         self.len
+    }
+}
+
+impl<T> Drop for DoublyLinkedList<T> {
+    fn drop(&mut self) {
+        self.clear();
     }
 }
