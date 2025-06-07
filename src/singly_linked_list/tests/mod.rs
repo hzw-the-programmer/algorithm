@@ -2,6 +2,7 @@ use super::*;
 
 mod basic;
 mod cycle_entry;
+mod drop;
 mod has_cycle;
 mod into_iter;
 mod iter;
