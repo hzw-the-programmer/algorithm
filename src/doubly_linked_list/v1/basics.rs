@@ -62,7 +62,7 @@ impl<T> DoublyLinkedList<T> {
     }
 
     pub fn push_back(&mut self, value: T) {
-        let raw = Box::into_raw(Box::new(Node::new(value, self.head, self.tail)));
+        let raw = Box::into_raw(Box::new(Node::new(value, ptr::null_mut(), self.tail)));
         if self.tail.is_null() {
             self.head = raw;
         } else {
@@ -83,12 +83,11 @@ impl<T> DoublyLinkedList<T> {
         let node = unsafe { Box::from_raw(self.tail) };
         self.tail = node.pre;
         // node.pre = ptr::null_mut();
-        // node.next = ptr::null_mut();
         if self.tail.is_null() {
             self.head = ptr::null_mut();
         } else {
             unsafe {
-                (*self.tail).next = self.head;
+                (*self.tail).next = ptr::null_mut();
             }
         }
         self.len -= 1;
