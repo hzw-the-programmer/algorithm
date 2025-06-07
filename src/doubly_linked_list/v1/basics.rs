@@ -45,18 +45,52 @@ impl<T> DoublyLinkedList<T> {
             return None;
         }
 
-        let node = unsafe { Box::from_raw(self.head) };
+        let mut node = unsafe { Box::from_raw(self.head) };
         self.head = node.next;
+        node.next = ptr::null_mut();
         if self.head.is_null() {
             self.tail = ptr::null_mut();
         } else {
             unsafe {
-                (*node.next).pre = ptr::null_mut();
+                (*self.head).pre = ptr::null_mut();
             }
         }
         self.len -= 1;
 
-        // node.next = ptr::null_mut();
+        Some(node.value)
+    }
+
+    pub fn push_back(&mut self, value: T) {
+        let raw = Box::into_raw(Box::new(Node::new(value, self.head, self.tail)));
+        if self.tail.is_null() {
+            self.head = raw;
+        } else {
+            unsafe {
+                (*self.tail).next = raw;
+            }
+        }
+        self.tail = raw;
+        self.len += 1;
+    }
+
+    pub fn pop_back(&mut self) -> Option<T> {
+        if self.tail.is_null() {
+            return None;
+        }
+
+        let mut node = unsafe { Box::from_raw(self.tail) };
+        self.tail = node.pre;
+        node.pre = ptr::null_mut();
+        node.next = ptr::null_mut();
+        if self.tail.is_null() {
+            self.head = ptr::null_mut();
+        } else {
+            unsafe {
+                (*self.tail).next = self.head;
+            }
+        }
+        self.len -= 1;
+
         Some(node.value)
     }
 
