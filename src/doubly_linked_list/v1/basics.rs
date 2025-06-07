@@ -45,9 +45,10 @@ impl<T> DoublyLinkedList<T> {
             return None;
         }
 
-        let mut node = unsafe { Box::from_raw(self.head) };
+        // let mut node = unsafe { Box::from_raw(self.head) };
+        let node = unsafe { Box::from_raw(self.head) };
         self.head = node.next;
-        node.next = ptr::null_mut();
+        // node.next = ptr::null_mut();
         if self.head.is_null() {
             self.tail = ptr::null_mut();
         } else {
@@ -78,10 +79,11 @@ impl<T> DoublyLinkedList<T> {
             return None;
         }
 
-        let mut node = unsafe { Box::from_raw(self.tail) };
+        // let mut node = unsafe { Box::from_raw(self.tail) };
+        let node = unsafe { Box::from_raw(self.tail) };
         self.tail = node.pre;
-        node.pre = ptr::null_mut();
-        node.next = ptr::null_mut();
+        // node.pre = ptr::null_mut();
+        // node.next = ptr::null_mut();
         if self.tail.is_null() {
             self.head = ptr::null_mut();
         } else {
