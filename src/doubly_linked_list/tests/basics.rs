@@ -31,6 +31,15 @@ fn test_push_pop_back() {
 }
 
 #[test]
+fn test_push_front_pop_back() {
+    let mut dll = DoublyLinkedList::new();
+    dll.push_front(1);
+    dll.push_front(2);
+    assert_eq!(dll.pop_back().unwrap(), 1);
+    assert_eq!(dll.pop_back().unwrap(), 2);
+}
+
+#[test]
 fn test() {
     let mut dll = DoublyLinkedList::new();
     assert!(dll.is_empty());
