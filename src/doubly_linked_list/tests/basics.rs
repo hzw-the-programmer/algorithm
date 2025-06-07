@@ -40,6 +40,32 @@ fn test_push_front_pop_back() {
 }
 
 #[test]
+fn test_clear() {
+    static mut COUNT: i32 = 0;
+
+    struct Foo(i32);
+
+    impl Drop for Foo {
+        fn drop(&mut self) {
+            println!("Foo {} drop", self.0);
+            unsafe {
+                COUNT += 1;
+            }
+        }
+    }
+
+    let mut dll = DoublyLinkedList::new();
+    dll.push_front(Foo(2));
+    dll.push_front(Foo(1));
+    dll.push_front(Foo(0));
+    dll.clear();
+    unsafe {
+        let count = COUNT;
+        assert_eq!(count, 3);
+    }
+}
+
+#[test]
 fn test() {
     let mut dll = DoublyLinkedList::new();
     assert!(dll.is_empty());

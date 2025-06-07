@@ -93,4 +93,8 @@ impl<T> DoublyLinkedList<T> {
     pub fn len(&self) -> usize {
         self.len
     }
+
+    pub fn clear(&mut self) {
+        while let Some(_) = self.pop_front() {}
+    }
 }
