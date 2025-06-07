@@ -7,6 +7,7 @@ pub mod catalan;
 pub mod count_ways;
 pub mod cut_rod;
 pub mod disjoint_set;
+pub mod doubly_linked_list;
 pub mod fibonacci;
 pub mod insertion_sort;
 pub mod kmp;
