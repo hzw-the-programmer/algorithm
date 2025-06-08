@@ -48,13 +48,14 @@ impl<T> CircularSinglyLinkedList<T> {
         }
 
         let node = self.head.take().unwrap();
-        let next = node.borrow_mut().next.take().unwrap();
-        if Rc::ptr_eq(&node, &next) {
-            self.tail = None;
-        } else {
-            self.head = Some(next);
-            let tail = self.tail.as_ref().unwrap().upgrade().unwrap();
-            tail.borrow_mut().next = self.head.clone();
+        if let Some(next) = node.borrow_mut().next.take() {
+            if Rc::ptr_eq(&node, &next) {
+                self.tail = None;
+            } else {
+                self.head = Some(next.clone());
+                let tail = self.tail.as_ref().unwrap().upgrade().unwrap();
+                tail.borrow_mut().next = Some(next);
+            }
         }
 
         self.len -= 1;
