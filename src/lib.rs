@@ -4,6 +4,7 @@ pub mod base64;
 pub mod binary_search_tree;
 pub mod binary_tree;
 pub mod catalan;
+pub mod circular_singly_linked_list;
 pub mod count_ways;
 pub mod cut_rod;
 pub mod disjoint_set;
