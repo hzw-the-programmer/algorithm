@@ -7,8 +7,12 @@ struct Node<T> {
 }
 
 impl<T> Node<T> {
-    fn new(value: T, next: Option<Box<Node<T>>>, pre: *mut Node<T>) -> Self {
-        Self { value, next, pre }
+    fn new(value: T) -> Self {
+        Self {
+            value,
+            next: None,
+            pre: ptr::null_mut(),
+        }
     }
 }
 
@@ -28,7 +32,7 @@ impl<T> List<T> {
     }
 
     pub fn push_front(&mut self, value: T) {
-        let mut new_head = Box::new(Node::new(value, None, ptr::null_mut()));
+        let mut new_head = Box::new(Node::new(value));
         match self.head.take() {
             Some(mut old_head) => {
                 old_head.pre = &mut *new_head;
@@ -59,7 +63,7 @@ impl<T> List<T> {
     }
 
     pub fn push_back(&mut self, value: T) {
-        let mut node = Box::new(Node::new(value, None, ptr::null_mut()));
+        let mut node = Box::new(Node::new(value));
         if self.tail.is_null() {
             self.tail = &mut *node;
             self.head = Some(node);
