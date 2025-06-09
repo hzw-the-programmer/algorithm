@@ -102,3 +102,13 @@ impl<T> List<T> {
         while let Some(_) = self.pop_front() {}
     }
 }
+
+impl<T> List<T> {
+    pub fn peek_front(&self) -> Option<&T> {
+        self.head.as_deref().map(|head| &head.value)
+    }
+
+    pub fn peek_front_mut(&mut self) -> Option<&mut T> {
+        self.head.as_deref_mut().map(|head| &mut head.value)
+    }
+}
