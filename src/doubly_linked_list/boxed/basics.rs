@@ -59,17 +59,20 @@ impl<T> List<T> {
     }
 
     pub fn push_back(&mut self, value: T) {
-        let mut node = Box::new(Node::new(value, None, self.tail));
-        let raw = &mut *node as *mut Node<T>;
+        let mut node = Box::new(Node::new(value, None, ptr::null_mut()));
         if self.tail.is_null() {
+            self.tail = &mut *node;
             self.head = Some(node);
+            self.len += 1;
         } else {
+            node.pre = self.tail;
+            let raw = &mut *node as *mut Node<T>;
             unsafe {
                 (*self.tail).next = Some(node);
             }
+            self.tail = raw;
+            self.len += 1;
         }
-        self.tail = raw;
-        self.len += 1;
     }
 
     pub fn pop_back(&mut self) -> Option<T> {
