@@ -60,8 +60,8 @@ impl<T> SinglyLinkedList<T> {
     }
 
     pub fn pop_front(&mut self) -> Option<T> {
-        self.head.take().map(|mut node| {
-            self.head = node.next.take();
+        self.head.take().map(|node| {
+            self.head = node.next;
             if self.head.is_none() {
                 self.tail = ptr::null_mut();
             }
