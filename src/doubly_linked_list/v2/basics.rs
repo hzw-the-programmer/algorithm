@@ -45,20 +45,17 @@ impl<T> DoublyLinkedList<T> {
     }
 
     pub fn pop_front(&mut self) -> Option<T> {
-        if self.head.is_none() {
-            return None;
-        }
-
-        let mut node = self.head.take().unwrap();
-        self.head = node.next.take();
-        if self.head.is_none() {
-            self.tail = ptr::null_mut();
-        } else {
-            self.head.as_deref_mut().unwrap().pre = ptr::null_mut();
-        }
-        self.len -= 1;
-
-        Some(node.value)
+        self.head.take().map(|old_head| {
+            self.len -= 1;
+            match old_head.next {
+                Some(mut new_head) => {
+                    new_head.pre = ptr::null_mut();
+                    self.head = Some(new_head);
+                }
+                None => self.tail = ptr::null_mut(),
+            }
+            old_head.value
+        })
     }
 
     pub fn push_back(&mut self, value: T) {
