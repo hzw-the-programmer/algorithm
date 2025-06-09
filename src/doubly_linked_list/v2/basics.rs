@@ -28,14 +28,20 @@ impl<T> DoublyLinkedList<T> {
     }
 
     pub fn push_front(&mut self, value: T) {
-        let mut node = Box::new(Node::new(value, self.head.take(), ptr::null_mut()));
-        if node.next.is_none() {
-            self.tail = &mut *node;
-        } else {
-            node.next.as_deref_mut().unwrap().pre = &mut *node;
+        let mut new_head = Box::new(Node::new(value, None, ptr::null_mut()));
+        match self.head.take() {
+            Some(mut old_head) => {
+                old_head.pre = &mut *new_head;
+                new_head.next = Some(old_head);
+                self.head = Some(new_head);
+                self.len += 1;
+            }
+            None => {
+                self.tail = &mut *new_head;
+                self.head = Some(new_head);
+                self.len += 1;
+            }
         }
-        self.head = Some(node);
-        self.len += 1;
     }
 
     pub fn pop_front(&mut self) -> Option<T> {
