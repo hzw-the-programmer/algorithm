@@ -59,6 +59,14 @@ impl<T> SinglyLinkedList<T> {
         self.len += 1;
     }
 
+    pub fn peek_front(&self) -> Option<&T> {
+        self.head.as_deref().map(|node| &node.value)
+    }
+
+    pub fn peek_front_mut(&mut self) -> Option<&mut T> {
+        self.head.as_deref_mut().map(|node| &mut node.value)
+    }
+
     pub fn pop_front(&mut self) -> Option<T> {
         self.head.take().map(|node| {
             self.head = node.next;
