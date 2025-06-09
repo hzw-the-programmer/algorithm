@@ -1,5 +1,7 @@
 use core::ptr;
 
+pub type DoublyLinkedList<T> = List<T>;
+
 struct Node<T> {
     value: T,
     next: Option<Box<Node<T>>>,
@@ -12,13 +14,13 @@ impl<T> Node<T> {
     }
 }
 
-pub struct DoublyLinkedList<T> {
+pub struct List<T> {
     head: Option<Box<Node<T>>>,
     tail: *mut Node<T>,
     len: usize,
 }
 
-impl<T> DoublyLinkedList<T> {
+impl<T> List<T> {
     pub fn new() -> Self {
         Self {
             head: None,
