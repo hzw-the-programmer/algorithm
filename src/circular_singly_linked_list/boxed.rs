@@ -88,6 +88,10 @@ impl<T> CircularSinglyLinkedList<T> {
     pub fn len(&self) -> usize {
         self.len
     }
+
+    pub fn clear(&mut self) {
+        while let Some(_) = self.pop_front() {}
+    }
 }
 
 impl<T> Drop for CircularSinglyLinkedList<T> {

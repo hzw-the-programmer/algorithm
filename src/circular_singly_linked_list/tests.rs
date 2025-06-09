@@ -183,3 +183,44 @@ fn test_drop_6() {
     }
     println!("leave");
 }
+
+#[test]
+fn test_clear() {
+    static mut COUNT: i32 = 0;
+    struct Foo(i32);
+    impl Drop for Foo {
+        fn drop(&mut self) {
+            println!("Foo {} drop", self.0);
+            unsafe {
+                COUNT += 1;
+            }
+        }
+    }
+
+    {
+        let mut list = CircularSinglyLinkedList::new();
+        assert!(list.is_empty());
+
+        list.push_back(Foo(3));
+        list.push_front(Foo(2));
+        list.push_back(Foo(4));
+        list.push_front(Foo(1));
+        list.push_front(Foo(0));
+        list.push_back(Foo(5));
+        assert_eq!(list.len(), 6);
+
+        list.clear();
+        assert!(list.is_empty());
+        list.push_back(Foo(3));
+        list.push_front(Foo(2));
+        list.push_back(Foo(4));
+        list.push_front(Foo(1));
+        list.push_front(Foo(0));
+        list.push_back(Foo(5));
+        assert_eq!(list.len(), 6);
+    }
+    unsafe {
+        let cnt = COUNT;
+        assert_eq!(cnt, 12);
+    }
+}
