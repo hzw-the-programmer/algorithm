@@ -2,41 +2,41 @@ use super::*;
 
 #[test]
 fn test_push_pop_front() {
-    let mut dll = DoublyLinkedList::new();
-    assert!(dll.is_empty());
-    dll.push_front(1);
-    dll.push_front(2);
-    dll.push_front(3);
-    assert_eq!(dll.len(), 3);
-    assert_eq!(dll.pop_front().unwrap(), 3);
-    assert_eq!(dll.pop_front().unwrap(), 2);
-    assert_eq!(dll.pop_front().unwrap(), 1);
-    assert!(dll.pop_front().is_none());
-    assert!(dll.is_empty());
+    let mut list = List::new();
+    assert!(list.is_empty());
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    assert_eq!(list.len(), 3);
+    assert_eq!(list.pop_front().unwrap(), 3);
+    assert_eq!(list.pop_front().unwrap(), 2);
+    assert_eq!(list.pop_front().unwrap(), 1);
+    assert!(list.pop_front().is_none());
+    assert!(list.is_empty());
 }
 
 #[test]
 fn test_push_pop_back() {
-    let mut dll = DoublyLinkedList::new();
-    assert!(dll.is_empty());
-    dll.push_back(1);
-    dll.push_back(2);
-    dll.push_back(3);
-    assert_eq!(dll.len(), 3);
-    assert_eq!(dll.pop_back().unwrap(), 3);
-    assert_eq!(dll.pop_back().unwrap(), 2);
-    assert_eq!(dll.pop_back().unwrap(), 1);
-    assert!(dll.pop_back().is_none());
-    assert!(dll.is_empty());
+    let mut list = List::new();
+    assert!(list.is_empty());
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    assert_eq!(list.len(), 3);
+    assert_eq!(list.pop_back().unwrap(), 3);
+    assert_eq!(list.pop_back().unwrap(), 2);
+    assert_eq!(list.pop_back().unwrap(), 1);
+    assert!(list.pop_back().is_none());
+    assert!(list.is_empty());
 }
 
 #[test]
 fn test_push_front_pop_back() {
-    let mut dll = DoublyLinkedList::new();
-    dll.push_front(1);
-    dll.push_front(2);
-    assert_eq!(dll.pop_back().unwrap(), 1);
-    assert_eq!(dll.pop_back().unwrap(), 2);
+    let mut list = List::new();
+    list.push_front(1);
+    list.push_front(2);
+    assert_eq!(list.pop_back().unwrap(), 1);
+    assert_eq!(list.pop_back().unwrap(), 2);
 }
 
 #[test]
@@ -54,11 +54,11 @@ fn test_clear() {
         }
     }
 
-    let mut dll = DoublyLinkedList::new();
-    dll.push_front(Foo(2));
-    dll.push_front(Foo(1));
-    dll.push_front(Foo(0));
-    dll.clear();
+    let mut list = List::new();
+    list.push_front(Foo(2));
+    list.push_front(Foo(1));
+    list.push_front(Foo(0));
+    list.clear();
     unsafe {
         let count = COUNT;
         assert_eq!(count, 3);
@@ -67,26 +67,26 @@ fn test_clear() {
 
 #[test]
 fn test() {
-    let mut dll = DoublyLinkedList::new();
-    assert!(dll.is_empty());
+    let mut list = List::new();
+    assert!(list.is_empty());
 
-    dll.push_back(3);
-    dll.push_front(2);
-    dll.push_back(4);
-    dll.push_front(1);
-    dll.push_back(5);
-    dll.push_front(0);
-    assert_eq!(dll.len(), 6);
+    list.push_back(3);
+    list.push_front(2);
+    list.push_back(4);
+    list.push_front(1);
+    list.push_back(5);
+    list.push_front(0);
+    assert_eq!(list.len(), 6);
 
-    assert_eq!(dll.pop_front().unwrap(), 0);
-    assert_eq!(dll.pop_back().unwrap(), 5);
-    assert_eq!(dll.pop_front().unwrap(), 1);
-    assert_eq!(dll.pop_back().unwrap(), 4);
-    assert_eq!(dll.pop_front().unwrap(), 2);
-    assert_eq!(dll.pop_back().unwrap(), 3);
-    assert!(dll.is_empty());
-    assert!(dll.pop_front().is_none());
-    assert!(dll.pop_back().is_none());
+    assert_eq!(list.pop_front().unwrap(), 0);
+    assert_eq!(list.pop_back().unwrap(), 5);
+    assert_eq!(list.pop_front().unwrap(), 1);
+    assert_eq!(list.pop_back().unwrap(), 4);
+    assert_eq!(list.pop_front().unwrap(), 2);
+    assert_eq!(list.pop_back().unwrap(), 3);
+    assert!(list.is_empty());
+    assert!(list.pop_front().is_none());
+    assert!(list.pop_back().is_none());
 }
 
 #[test]

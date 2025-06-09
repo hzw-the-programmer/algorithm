@@ -1,7 +1,5 @@
 use core::ptr;
 
-pub type DoublyLinkedList<T> = List<T>;
-
 struct Node<T> {
     value: T,
     next: Option<Box<Node<T>>>,

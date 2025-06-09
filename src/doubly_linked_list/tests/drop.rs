@@ -3,12 +3,12 @@ use super::*;
 #[test]
 fn test() {
     {
-        let mut dll = DoublyLinkedList::new();
-        dll.push_front(Foo(2));
-        dll.push_front(Foo(1));
-        dll.push_front(Foo(0));
+        let mut list = List::new();
+        list.push_front(Foo(2));
+        list.push_front(Foo(1));
+        list.push_front(Foo(0));
 
-        dll.pop_front();
+        list.pop_front();
         unsafe {
             let count = COUNT;
             assert_eq!(count, 1);
