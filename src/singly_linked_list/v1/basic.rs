@@ -50,25 +50,25 @@ impl<T> List<T> {
     }
 
     pub fn push_back(&mut self, value: T) {
-        let mut node = Node::new_box(value, None);
-        let ptr = &mut *node as *mut Node<T>;
+        let mut new_tail = Box::new(Node::new(value, None));
+        let raw_tail: *mut _ = &mut *new_tail;
         if self.tail.is_null() {
-            self.head = Some(node);
+            self.head = Some(new_tail);
         } else {
-            unsafe { (*self.tail).next = Some(node) };
+            unsafe { (*self.tail).next = Some(new_tail) };
         }
-        self.tail = ptr;
+        self.tail = raw_tail;
         self.len += 1;
     }
 
     pub fn pop_front(&mut self) -> Option<T> {
-        self.head.take().map(|node| {
-            self.head = node.next;
+        self.head.take().map(|old_head| {
+            self.head = old_head.next;
             if self.head.is_none() {
                 self.tail = ptr::null_mut();
             }
             self.len -= 1;
-            node.value
+            old_head.value
         })
     }
 
@@ -94,5 +94,13 @@ impl<T> List<T> {
 
     pub fn peek_front_mut(&mut self) -> Option<&mut T> {
         self.head.as_deref_mut().map(|node| &mut node.value)
+    }
+
+    pub fn push(&mut self, value: T) {
+        self.push_back(value);
+    }
+
+    pub fn pop(&mut self) -> Option<T> {
+        self.pop_front()
     }
 }
