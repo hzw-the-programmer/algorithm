@@ -2,41 +2,41 @@ use super::*;
 
 #[test]
 fn test() {
-    let mut l = SinglyLinkedList::new();
+    let mut list = List::new();
 
-    assert_eq!(l.len(), 0);
-    assert!(l.is_empty());
-    assert!(l.pop_front().is_none());
+    assert_eq!(list.len(), 0);
+    assert!(list.is_empty());
+    assert!(list.pop_front().is_none());
 
-    l.push_front(1);
-    assert_eq!(l.len(), 1);
-    assert!(!l.is_empty());
-    assert_eq!(l.pop_front().unwrap(), 1);
-    assert_eq!(l.len(), 0);
-    assert!(l.is_empty());
-    assert!(l.pop_front().is_none());
+    list.push_front(1);
+    assert_eq!(list.len(), 1);
+    assert!(!list.is_empty());
+    assert_eq!(list.pop_front().unwrap(), 1);
+    assert_eq!(list.len(), 0);
+    assert!(list.is_empty());
+    assert!(list.pop_front().is_none());
 
-    l.push_back(1);
-    assert_eq!(l.len(), 1);
-    assert!(!l.is_empty());
-    assert_eq!(l.pop_front().unwrap(), 1);
-    assert_eq!(l.len(), 0);
-    assert!(l.is_empty());
-    assert!(l.pop_front().is_none());
+    list.push_back(1);
+    assert_eq!(list.len(), 1);
+    assert!(!list.is_empty());
+    assert_eq!(list.pop_front().unwrap(), 1);
+    assert_eq!(list.len(), 0);
+    assert!(list.is_empty());
+    assert!(list.pop_front().is_none());
 
-    l.push_back(1);
-    l.push_front(2);
-    assert_eq!(l.len(), 2);
-    assert!(!l.is_empty());
+    list.push_back(1);
+    list.push_front(2);
+    assert_eq!(list.len(), 2);
+    assert!(!list.is_empty());
 
-    l.clear();
-    assert_eq!(l.len(), 0);
-    assert!(l.is_empty());
+    list.clear();
+    assert_eq!(list.len(), 0);
+    assert!(list.is_empty());
 }
 
 #[test]
 fn peek() {
-    let mut list = SinglyLinkedList::new();
+    let mut list = List::new();
     assert_eq!(list.peek_front(), None);
     assert_eq!(list.peek_front_mut(), None);
 
