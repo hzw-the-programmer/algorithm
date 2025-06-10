@@ -97,6 +97,14 @@ impl<T> List<T> {
         self.pop_front()
     }
 
+    pub fn peek(&self) -> Option<&T> {
+        self.peek_front()
+    }
+
+    pub fn peek_mut(&mut self) -> Option<&mut T> {
+        self.peek_front_mut()
+    }
+
     pub fn peek_front(&self) -> Option<&T> {
         unsafe { self.head.as_ref().map(|n| &n.value) }
     }
