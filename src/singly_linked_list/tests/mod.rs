@@ -5,7 +5,7 @@ mod basics;
 // mod drop;
 // mod has_cycle;
 // mod into_iter;
-// mod iter;
+mod iter;
 // mod iter_mut;
 // mod middle;
 // mod nth_from_end;

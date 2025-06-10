@@ -1,8 +1,8 @@
 use core::ptr;
 
-struct Node<T> {
-    value: T,
-    next: *mut Node<T>,
+pub(super) struct Node<T> {
+    pub(super) value: T,
+    pub(super) next: *mut Node<T>,
 }
 
 impl<T> Node<T> {
@@ -15,7 +15,7 @@ impl<T> Node<T> {
 }
 
 pub struct List<T> {
-    head: *mut Node<T>,
+    pub(super) head: *mut Node<T>,
     tail: *mut Node<T>,
     len: usize,
 }
