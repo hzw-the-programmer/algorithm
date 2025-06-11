@@ -22,3 +22,12 @@ impl<T> DerefMut for Queue<T> {
         &mut self.0
     }
 }
+
+impl<T> IntoIterator for Queue<T> {
+    type Item = T;
+    type IntoIter = IntoIter<T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
+    }
+}
