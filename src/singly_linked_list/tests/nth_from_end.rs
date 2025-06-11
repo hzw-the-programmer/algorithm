@@ -2,20 +2,20 @@ use super::*;
 
 #[test]
 fn test() {
-    let mut l = SinglyLinkedList::new();
+    let mut list = List::new();
 
-    l.push_back(1);
-    assert_eq!(l.nth_from_end(1).unwrap().value, 1);
-    assert!(l.nth_from_end(2).is_none());
+    list.push_back(1);
+    assert_eq!(list.nth_from_end(1), Some(&1));
+    assert_eq!(list.nth_from_end(2), None);
 
-    l.push_back(2);
-    assert_eq!(l.nth_from_end(1).unwrap().value, 2);
-    assert_eq!(l.nth_from_end(2).unwrap().value, 1);
-    assert!(l.nth_from_end(3).is_none());
+    list.push_back(2);
+    assert_eq!(list.nth_from_end(1), Some(&2));
+    assert_eq!(list.nth_from_end(2), Some(&1));
+    assert_eq!(list.nth_from_end(3), None);
 
-    l.push_back(3);
-    assert_eq!(l.nth_from_end(1).unwrap().value, 3);
-    assert_eq!(l.nth_from_end(2).unwrap().value, 2);
-    assert_eq!(l.nth_from_end(3).unwrap().value, 1);
-    assert!(l.nth_from_end(4).is_none());
+    list.push_back(3);
+    assert_eq!(list.nth_from_end(1), Some(&3));
+    assert_eq!(list.nth_from_end(2), Some(&2));
+    assert_eq!(list.nth_from_end(3), Some(&1));
+    assert_eq!(list.nth_from_end(4), None);
 }
