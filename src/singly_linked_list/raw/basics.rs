@@ -16,8 +16,8 @@ impl<T> Node<T> {
 
 pub struct List<T> {
     pub(super) head: *mut Node<T>,
-    tail: *mut Node<T>,
-    len: usize,
+    pub(super) tail: *mut Node<T>,
+    pub(super) len: usize,
 }
 
 impl<T> List<T> {

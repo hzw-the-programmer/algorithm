@@ -40,4 +40,24 @@ impl<T> List<T> {
             }
         }
     }
+
+    pub fn remove_nth_from_end(&mut self, n: usize) -> Option<T> {
+        if n > 0 && n < self.len() {
+            let pre = self.nth_node_from_end(n + 1);
+            unsafe {
+                let cur = (*pre).next;
+                (*pre).next = (*cur).next;
+                if n == 1 {
+                    self.tail = pre;
+                }
+                let node = Box::from_raw(cur);
+                self.len -= 1;
+                Some(node.value)
+            }
+        } else if n == self.len() {
+            self.pop_front()
+        } else {
+            None
+        }
+    }
 }
