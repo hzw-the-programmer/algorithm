@@ -1,4 +1,5 @@
 use super::*;
+use core::ptr;
 
 impl<T> List<T> {
     pub fn middle(&self) -> Option<&T> {
@@ -18,8 +19,12 @@ impl<T> List<T> {
     }
 
     pub fn nth_from_end(&self, n: usize) -> Option<&T> {
+        unsafe { self.nth_node_from_end(n).as_ref().map(|node| &node.value) }
+    }
+
+    fn nth_node_from_end(&self, n: usize) -> *mut Node<T> {
         if n == 0 || n > self.len() {
-            None
+            ptr::null_mut()
         } else {
             unsafe {
                 let mut fast = self.head;
@@ -31,7 +36,7 @@ impl<T> List<T> {
                     fast = (*fast).next;
                     slow = (*slow).next;
                 }
-                slow.as_ref().map(|node| &node.value)
+                slow
             }
         }
     }
