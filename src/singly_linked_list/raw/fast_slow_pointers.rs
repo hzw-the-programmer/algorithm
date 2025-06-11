@@ -43,13 +43,12 @@ impl<T> List<T> {
     pub fn remove_nth_from_end(&mut self, n: usize) -> Option<T> {
         if n > 0 && n < self.len() {
             let pre = self.nth_node_from_end(n + 1).unwrap();
-            let cur = pre.next;
-            pre.next = unsafe { (*cur).next };
+            let node = unsafe { Box::from_raw(pre.next) };
+            pre.next = node.next;
             if n == 1 {
                 self.tail = pre;
             }
             self.len -= 1;
-            let node = unsafe { Box::from_raw(cur) };
             Some(node.value)
         } else if n == self.len() {
             self.pop_front()
