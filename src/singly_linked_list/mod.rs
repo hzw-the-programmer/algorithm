@@ -4,5 +4,8 @@
 mod raw;
 pub use raw::*;
 
+mod queue;
+pub use queue::*;
+
 #[cfg(test)]
 mod tests;
