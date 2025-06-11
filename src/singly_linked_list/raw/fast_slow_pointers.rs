@@ -48,8 +48,8 @@ impl<T> List<T> {
             if n == 1 {
                 self.tail = pre;
             }
-            let node = unsafe { Box::from_raw(cur) };
             self.len -= 1;
+            let node = unsafe { Box::from_raw(cur) };
             Some(node.value)
         } else if n == self.len() {
             self.pop_front()
