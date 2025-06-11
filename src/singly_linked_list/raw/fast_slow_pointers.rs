@@ -1,5 +1,4 @@
 use super::*;
-use core::ptr;
 
 impl<T> List<T> {
     pub fn middle(&self) -> Option<&T> {
@@ -19,12 +18,12 @@ impl<T> List<T> {
     }
 
     pub fn nth_from_end(&self, n: usize) -> Option<&T> {
-        unsafe { self.nth_node_from_end(n).as_ref().map(|node| &node.value) }
+        self.nth_node_from_end(n).map(|node| &node.value)
     }
 
-    fn nth_node_from_end(&self, n: usize) -> *mut Node<T> {
+    fn nth_node_from_end(&self, n: usize) -> Option<&mut Node<T>> {
         if n == 0 || n > self.len() {
-            ptr::null_mut()
+            None
         } else {
             unsafe {
                 let mut fast = self.head;
@@ -36,24 +35,22 @@ impl<T> List<T> {
                     fast = (*fast).next;
                     slow = (*slow).next;
                 }
-                slow
+                slow.as_mut()
             }
         }
     }
 
     pub fn remove_nth_from_end(&mut self, n: usize) -> Option<T> {
         if n > 0 && n < self.len() {
-            let pre = self.nth_node_from_end(n + 1);
-            unsafe {
-                let cur = (*pre).next;
-                (*pre).next = (*cur).next;
-                if n == 1 {
-                    self.tail = pre;
-                }
-                let node = Box::from_raw(cur);
-                self.len -= 1;
-                Some(node.value)
+            let pre = self.nth_node_from_end(n + 1).unwrap();
+            let cur = pre.next;
+            pre.next = unsafe { (*cur).next };
+            if n == 1 {
+                self.tail = pre;
             }
+            let node = unsafe { Box::from_raw(cur) };
+            self.len -= 1;
+            Some(node.value)
         } else if n == self.len() {
             self.pop_front()
         } else {
