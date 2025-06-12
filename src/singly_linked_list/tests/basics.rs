@@ -88,3 +88,15 @@ fn basics() {
     assert_eq!(list.pop(), Some(7));
     assert_eq!(list.pop(), None);
 }
+
+#[test]
+fn get() {
+    let mut list = List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+    assert_eq!(list.get(0), Some(&1));
+    assert_eq!(list.get(1), Some(&2));
+    assert_eq!(list.get(2), Some(&3));
+    assert_eq!(list.get(3), None);
+}
