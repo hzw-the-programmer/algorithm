@@ -56,4 +56,45 @@ impl<T> List<T> {
             None
         }
     }
+
+    pub fn has_cycle(&self) -> bool {
+        let mut fast = self.head;
+        let mut slow = self.head;
+        while !fast.is_null() {
+            fast = unsafe { (*fast).next };
+            if !fast.is_null() {
+                fast = unsafe { (*fast).next };
+                slow = unsafe { (*slow).next };
+                if fast == slow {
+                    return true;
+                }
+            }
+        }
+        false
+    }
+}
+
+#[cfg(test)]
+impl<T> List<T> {
+    pub fn link(&mut self, from: usize, to: usize) {
+        if from >= self.len() || to >= self.len() {
+            return;
+        }
+
+        let to: *mut _ = self.get_mut_node(to).unwrap();
+        let from = self.get_mut_node(from).unwrap();
+        from.next = to;
+    }
+
+    pub fn unlink(&mut self, from: usize, to: usize) {
+        if from >= self.len() || to >= self.len() {
+            return;
+        }
+
+        let to: *mut _ = self.get_mut_node(to).unwrap();
+        let from = self.get_mut_node(from).unwrap();
+        if core::ptr::eq(from.next, to) {
+            from.next = core::ptr::null_mut();
+        }
+    }
 }

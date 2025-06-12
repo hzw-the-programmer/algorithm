@@ -2,67 +2,33 @@ use super::*;
 
 #[test]
 fn test_1() {
-    let n4 = Node::new_box(4, None);
-    let n4_raw = Box::into_raw(n4);
-    let n4 = unsafe { Box::from_raw(n4_raw) };
-
-    let n3 = Node::new_link(3, Some(n4));
-
-    let mut n2 = Node::new_box(2, n3);
-    let n2_raw = Box::into_raw(n2);
-    n2 = unsafe { Box::from_raw(n2_raw) };
-
-    let n1 = Node::new_link(1, Some(n2));
-    let n0 = Node::new_link(0, n1);
-
-    let mut l = SinglyLinkedList::new();
-    l.head = n0;
-
-    unsafe {
-        (*n4_raw).next = Some(Box::from_raw(n2_raw));
+    let mut list = List::new();
+    for i in 0..5 {
+        list.push(i);
     }
-
-    assert!(l.has_cycle());
-
-    unsafe {
-        let _ = std::mem::ManuallyDrop::new((*n4_raw).next.take());
-    }
+    list.link(4, 2);
+    assert!(list.has_cycle());
+    list.unlink(4, 2);
 }
 
 #[test]
 fn test_2() {
-    let mut l = SinglyLinkedList::new();
-    l.push_back(0);
-    l.push_back(1);
-    l.push_back(2);
-    l.push_back(3);
-    l.push_back(4);
-    assert!(!l.has_cycle());
+    let mut list = List::new();
+    list.push_back(0);
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    assert!(!list.has_cycle());
 }
 
 #[test]
 fn test_3() {
-    let n4 = Node::new_box(4, None);
-    let n4_raw = Box::into_raw(n4);
-    let n4 = unsafe { Box::from_raw(n4_raw) };
-
-    let mut n3 = Node::new_box(3, Some(n4));
-    let n3_raw = Box::into_raw(n3);
-    n3 = unsafe { Box::from_raw(n3_raw) };
-
-    let n2 = Node::new_link(2, Some(n3));
-    let n1 = Node::new_link(1, n2);
-
-    let mut l = SinglyLinkedList::new();
-    l.head = n1;
-
-    unsafe {
-        (*n4_raw).next = Some(Box::from_raw(n3_raw));
+    let mut list = List::new();
+    for i in 0..4 {
+        list.push(i);
     }
-
-    assert!(l.has_cycle());
-
-    unsafe {
-        let _ = std::mem::ManuallyDrop::new((*n4_raw).next.take());
-    }
+    list.link(3, 2);
+    assert!(list.has_cycle());
+    list.unlink(3, 2);
 }

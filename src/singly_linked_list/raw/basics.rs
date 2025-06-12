@@ -116,18 +116,14 @@ impl<T> List<T> {
 
 impl<T> List<T> {
     pub fn get(&self, idx: usize) -> Option<&T> {
-        if idx >= self.len() {
-            None
-        } else {
-            let mut cur = self.head;
-            for _ in 0..idx {
-                cur = unsafe { (*cur).next };
-            }
-            unsafe { cur.as_ref().map(|node| &node.value) }
-        }
+        self.get_node(idx).map(|node| &node.value)
     }
 
     pub fn get_mut(&mut self, idx: usize) -> Option<&mut T> {
+        self.get_mut_node(idx).map(|node| &mut node.value)
+    }
+
+    pub(super) fn get_node(&self, idx: usize) -> Option<&Node<T>> {
         if idx >= self.len() {
             None
         } else {
@@ -135,7 +131,19 @@ impl<T> List<T> {
             for _ in 0..idx {
                 cur = unsafe { (*cur).next };
             }
-            unsafe { cur.as_mut().map(|node| &mut node.value) }
+            unsafe { cur.as_ref() }
+        }
+    }
+
+    pub(super) fn get_mut_node(&mut self, idx: usize) -> Option<&mut Node<T>> {
+        if idx >= self.len() {
+            None
+        } else {
+            let mut cur = self.head;
+            for _ in 0..idx {
+                cur = unsafe { (*cur).next };
+            }
+            unsafe { cur.as_mut() }
         }
     }
 }
