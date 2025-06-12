@@ -100,3 +100,21 @@ fn get() {
     assert_eq!(list.get(2), Some(&3));
     assert_eq!(list.get(3), None);
 }
+
+#[test]
+fn get_mut() {
+    let mut list = List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+    assert_eq!(list.get_mut(0), Some(&mut 1));
+    assert_eq!(list.get_mut(1), Some(&mut 2));
+    assert_eq!(list.get_mut(2), Some(&mut 3));
+    assert_eq!(list.get_mut(3), None);
+
+    list.get_mut(1).map(|v| *v = 4);
+    assert_eq!(list.get_mut(0), Some(&mut 1));
+    assert_eq!(list.get_mut(1), Some(&mut 4));
+    assert_eq!(list.get_mut(2), Some(&mut 3));
+    assert_eq!(list.get_mut(3), None);
+}

@@ -126,4 +126,16 @@ impl<T> List<T> {
             unsafe { cur.as_ref().map(|node| &node.value) }
         }
     }
+
+    pub fn get_mut(&mut self, idx: usize) -> Option<&mut T> {
+        if idx >= self.len() {
+            None
+        } else {
+            let mut cur = self.head;
+            for _ in 0..idx {
+                cur = unsafe { (*cur).next };
+            }
+            unsafe { cur.as_mut().map(|node| &mut node.value) }
+        }
+    }
 }
