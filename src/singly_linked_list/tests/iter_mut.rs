@@ -15,9 +15,9 @@ fn test() {
 #[test]
 fn iter_mut() {
     let mut list = List::new();
-    list.push(1);
-    list.push(2);
-    list.push(3);
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
 
     let mut iter = list.iter_mut();
     assert_eq!(iter.next(), Some(&mut 1));

@@ -7,6 +7,22 @@ impl<T> Queue<T> {
     pub fn new() -> Self {
         Queue(List::new())
     }
+
+    pub fn push(&mut self, value: T) {
+        self.push_back(value)
+    }
+
+    pub fn pop(&mut self) -> Option<T> {
+        self.pop_front()
+    }
+
+    pub fn peek(&self) -> Option<&T> {
+        self.peek_front()
+    }
+
+    pub fn peek_mut(&mut self) -> Option<&mut T> {
+        self.peek_front_mut()
+    }
 }
 
 impl<T> Deref for Queue<T> {

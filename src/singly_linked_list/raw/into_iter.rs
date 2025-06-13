@@ -15,6 +15,6 @@ impl<T> Iterator for IntoIter<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.0.pop()
+        self.0.pop_front()
     }
 }

@@ -4,7 +4,7 @@ use super::*;
 fn test_1() {
     let mut list = List::new();
     for i in 0..5 {
-        list.push(i);
+        list.push_back(i);
     }
     list.link(4, 2);
     assert!(list.has_cycle());
@@ -26,7 +26,7 @@ fn test_2() {
 fn test_3() {
     let mut list = List::new();
     for i in 0..4 {
-        list.push(i);
+        list.push_back(i);
     }
     list.link(3, 2);
     assert!(list.has_cycle());

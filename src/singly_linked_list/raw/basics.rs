@@ -89,28 +89,20 @@ impl<T> Drop for List<T> {
 }
 
 impl<T> List<T> {
-    pub fn push(&mut self, value: T) {
-        self.push_back(value);
-    }
-
-    pub fn pop(&mut self) -> Option<T> {
-        self.pop_front()
-    }
-
-    pub fn peek(&self) -> Option<&T> {
-        self.peek_front()
-    }
-
-    pub fn peek_mut(&mut self) -> Option<&mut T> {
-        self.peek_front_mut()
-    }
-
     pub fn peek_front(&self) -> Option<&T> {
         unsafe { self.head.as_ref().map(|n| &n.value) }
     }
 
     pub fn peek_front_mut(&mut self) -> Option<&mut T> {
         unsafe { self.head.as_mut().map(|n| &mut n.value) }
+    }
+
+    pub fn peek_back(&self) -> Option<&T> {
+        unsafe { self.tail.as_ref().map(|n| &n.value) }
+    }
+
+    pub fn peek_back_mut(&mut self) -> Option<&mut T> {
+        unsafe { self.tail.as_mut().map(|n| &mut n.value) }
     }
 }
 
