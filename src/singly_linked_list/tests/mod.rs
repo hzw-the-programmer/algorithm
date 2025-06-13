@@ -1,7 +1,7 @@
 use super::*;
 
 mod basics;
-// mod cycle_entry;
+mod cycle_entry;
 // mod drop;
 mod has_cycle;
 mod index;

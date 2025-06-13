@@ -72,6 +72,32 @@ impl<T> List<T> {
         }
         false
     }
+
+    pub fn cycle_entry(&self) -> Option<&T> {
+        let mut fast = self.head;
+        let mut slow = self.head;
+        while !fast.is_null() {
+            fast = unsafe { (*fast).next };
+            if !fast.is_null() {
+                fast = unsafe { (*fast).next };
+                slow = unsafe { (*slow).next };
+                if fast == slow {
+                    fast = self.head;
+                    break;
+                }
+            }
+        }
+
+        while !fast.is_null() {
+            fast = unsafe { (*fast).next };
+            slow = unsafe { (*slow).next };
+            if fast == slow {
+                return unsafe { slow.as_ref().map(|node| &node.value) };
+            }
+        }
+
+        None
+    }
 }
 
 #[cfg(test)]
